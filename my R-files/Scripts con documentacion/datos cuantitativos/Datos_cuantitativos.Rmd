@@ -229,5 +229,6 @@ points(medias, col = "red", pch = 20)
 str(boxplot(Sepal.Length~Species, data = iris)) # Nos devuelve los datos usados para realizar la representación
 boxplot(Sepal.Length~Species, data = iris)$out
 boxplot(Sepal.Length~Species, data = iris)$stats # Nos devuelve los datos usados para realizar la representación
+boxplot(iris, horizontal = T) # Boxplot en horizontal
 ```
 
