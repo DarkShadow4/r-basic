@@ -1,0 +1,763 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Untitled},
+            pdfauthor={Eric},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Untitled}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{Eric}
+    \preauthor{\centering\large\emph}
+  \postauthor{\par}
+      \predate{\centering\large\emph}
+  \postdate{\par}
+    \date{7/9/2019}
+
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+
+\begin{document}
+\maketitle
+
+\hypertarget{estadistica-descriptiva-con-datos-cualitativos}{%
+\section{Estadística descriptiva con datos
+cualitativos}\label{estadistica-descriptiva-con-datos-cualitativos}}
+
+\hypertarget{funcion-table}{%
+\subsection{Función table}\label{funcion-table}}
+
+La función table crea una tabla de frecuencias absolutas del vector o
+factor dado La función sample crea una muestra aleatoria de los datos
+proporcionados
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x =}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{, }\DataTypeTok{size =} \DecValTok{12}\NormalTok{, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{) }\CommentTok{# 1:5 son los posibles datos (numeros del 1 al 5), size es el número de muestras que toma, replace indica si se pueden repetir las muestras}
+\KeywordTok{table}\NormalTok{(x)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## x
+## 1 2 3 4 5 
+## 2 3 1 5 1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{si_no =}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"si"}\NormalTok{, }\StringTok{"no"}\NormalTok{), }\DataTypeTok{size =} \DecValTok{12}\NormalTok{, }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{table}\NormalTok{(si_no)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## si_no
+## no si 
+##  7  5
+\end{verbatim}
+
+Se puede acceder a los elementos de la tabla por el indice de la columna
+o por el nombre de la misma
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{table}\NormalTok{(x)[}\DecValTok{4}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 4 
+## 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{table}\NormalTok{(x)[}\StringTok{"4"}\NormalTok{] }\CommentTok{# Si devuelve NA es porque no aparece el valor que se busca en la muestra}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 4 
+## 5
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{table}\NormalTok{(x)[}\StringTok{"5"}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 5 
+## 1
+\end{verbatim}
+
+\hypertarget{funcion-prop.table}{%
+\subsection{Función prop.table}\label{funcion-prop.table}}
+
+La función prop.table crea la tabla de frecuencias relativas \textbf{de
+la tabla de frecuencias absolutas} dada
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(x))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## x
+##          1          2          3          4          5 
+## 0.16666667 0.25000000 0.08333333 0.41666667 0.08333333
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(si_no))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## si_no
+##        no        si 
+## 0.5833333 0.4166667
+\end{verbatim}
+
+\hypertarget{tablas-de-frecuencia-bidimensionales}{%
+\subsection{Tablas de frecuencia
+bidimensionales}\label{tablas-de-frecuencia-bidimensionales}}
+
+La función table permite crear tablas de frecuencias de más de una
+dimensión
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Genero =}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"H"}\NormalTok{, }\StringTok{"M"}\NormalTok{), }\DataTypeTok{size =} \KeywordTok{length}\NormalTok{(si_no), }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{)}
+\KeywordTok{table}\NormalTok{(si_no, Genero)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      Genero
+## si_no H M
+##    no 5 2
+##    si 3 2
+\end{verbatim}
+
+En las tablas de frecuencia bidimensionales se pueden crear 3 tablas de
+frecuencias relativas distintas
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(si_no, Genero)) }\CommentTok{# Frecuencia relativa global (respecto al total de la tabla)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      Genero
+## si_no         H         M
+##    no 0.4166667 0.1666667
+##    si 0.2500000 0.1666667
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(si_no, Genero), }\DataTypeTok{margin =} \DecValTok{1}\NormalTok{) }\CommentTok{# Frecuencia relativa marginal (respecto al total de la fila)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      Genero
+## si_no         H         M
+##    no 0.7142857 0.2857143
+##    si 0.6000000 0.4000000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(si_no, Genero), }\DataTypeTok{margin =} \DecValTok{2}\NormalTok{) }\CommentTok{# Frecuencia relativa marginal (respecto al total de la columna)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      Genero
+## si_no     H     M
+##    no 0.625 0.500
+##    si 0.375 0.500
+\end{verbatim}
+
+gmodels es una librería que, entre otras cosas, permite generar dichas
+tablas y mostrarlas en una sola
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(gmodels)}
+\KeywordTok{CrossTable}\NormalTok{(Genero, si_no, }\DataTypeTok{prop.chisq =} \OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  
+##    Cell Contents
+## |-------------------------|
+## |                       N |
+## | Chi-square contribution |
+## |           N / Row Total |
+## |           N / Col Total |
+## |         N / Table Total |
+## |-------------------------|
+## 
+##  
+## Total Observations in Table:  12 
+## 
+##  
+##              | si_no 
+##       Genero |        no |        si | Row Total | 
+## -------------|-----------|-----------|-----------|
+##            H |         5 |         3 |         8 | 
+##              |     0.024 |     0.033 |           | 
+##              |     0.625 |     0.375 |     0.667 | 
+##              |     0.714 |     0.600 |           | 
+##              |     0.417 |     0.250 |           | 
+## -------------|-----------|-----------|-----------|
+##            M |         2 |         2 |         4 | 
+##              |     0.048 |     0.067 |           | 
+##              |     0.500 |     0.500 |     0.333 | 
+##              |     0.286 |     0.400 |           | 
+##              |     0.167 |     0.167 |           | 
+## -------------|-----------|-----------|-----------|
+## Column Total |         7 |         5 |        12 | 
+##              |     0.583 |     0.417 |           | 
+## -------------|-----------|-----------|-----------|
+## 
+## 
+\end{verbatim}
+
+\hypertarget{tabla-de-frecuencia-multidimensional}{%
+\subsection{Tabla de frecuencia
+multidimensional}\label{tabla-de-frecuencia-multidimensional}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lugar =}\StringTok{ }\KeywordTok{sample}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"Alicante"}\NormalTok{, }\StringTok{"Valencia"}\NormalTok{, }\StringTok{"Barcelona"}\NormalTok{, }\StringTok{"Madrid"}\NormalTok{, }\StringTok{"Girona"}\NormalTok{), }\DataTypeTok{size =} \KeywordTok{length}\NormalTok{(si_no), }\DataTypeTok{replace =} \OtherTok{TRUE}\NormalTok{)}
+\NormalTok{tabla <-}\StringTok{ }\KeywordTok{table}\NormalTok{(si_no, Genero, lugar)}
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(si_no, Genero, lugar)) }\CommentTok{# La tabla de frecuencias relativas es preferible hacerla de esta forma}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## , , lugar = Alicante
+## 
+##      Genero
+## si_no          H          M
+##    no 0.00000000 0.00000000
+##    si 0.08333333 0.00000000
+## 
+## , , lugar = Barcelona
+## 
+##      Genero
+## si_no          H          M
+##    no 0.25000000 0.00000000
+##    si 0.08333333 0.08333333
+## 
+## , , lugar = Girona
+## 
+##      Genero
+## si_no          H          M
+##    no 0.08333333 0.00000000
+##    si 0.00000000 0.08333333
+## 
+## , , lugar = Madrid
+## 
+##      Genero
+## si_no          H          M
+##    no 0.00000000 0.16666667
+##    si 0.08333333 0.00000000
+## 
+## , , lugar = Valencia
+## 
+##      Genero
+## si_no          H          M
+##    no 0.08333333 0.00000000
+##    si 0.00000000 0.00000000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(si_no, Genero, lugar), }\DataTypeTok{margin =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## , , lugar = Alicante
+## 
+##      Genero
+## si_no         H         M
+##    no 0.0000000 0.0000000
+##    si 0.2000000 0.0000000
+## 
+## , , lugar = Barcelona
+## 
+##      Genero
+## si_no         H         M
+##    no 0.4285714 0.0000000
+##    si 0.2000000 0.2000000
+## 
+## , , lugar = Girona
+## 
+##      Genero
+## si_no         H         M
+##    no 0.1428571 0.0000000
+##    si 0.0000000 0.2000000
+## 
+## , , lugar = Madrid
+## 
+##      Genero
+## si_no         H         M
+##    no 0.0000000 0.2857143
+##    si 0.2000000 0.0000000
+## 
+## , , lugar = Valencia
+## 
+##      Genero
+## si_no         H         M
+##    no 0.1428571 0.0000000
+##    si 0.0000000 0.0000000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(si_no, Genero, lugar), }\DataTypeTok{margin =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## , , lugar = Alicante
+## 
+##      Genero
+## si_no     H     M
+##    no 0.000 0.000
+##    si 0.125 0.000
+## 
+## , , lugar = Barcelona
+## 
+##      Genero
+## si_no     H     M
+##    no 0.375 0.000
+##    si 0.125 0.250
+## 
+## , , lugar = Girona
+## 
+##      Genero
+## si_no     H     M
+##    no 0.125 0.000
+##    si 0.000 0.250
+## 
+## , , lugar = Madrid
+## 
+##      Genero
+## si_no     H     M
+##    no 0.000 0.500
+##    si 0.125 0.000
+## 
+## , , lugar = Valencia
+## 
+##      Genero
+## si_no     H     M
+##    no 0.125 0.000
+##    si 0.000 0.000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(si_no, Genero, lugar), }\DataTypeTok{margin =} \DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## , , lugar = Alicante
+## 
+##      Genero
+## si_no         H         M
+##    no 0.0000000 0.0000000
+##    si 1.0000000 0.0000000
+## 
+## , , lugar = Barcelona
+## 
+##      Genero
+## si_no         H         M
+##    no 0.6000000 0.0000000
+##    si 0.2000000 0.2000000
+## 
+## , , lugar = Girona
+## 
+##      Genero
+## si_no         H         M
+##    no 0.5000000 0.0000000
+##    si 0.0000000 0.5000000
+## 
+## , , lugar = Madrid
+## 
+##      Genero
+## si_no         H         M
+##    no 0.0000000 0.6666667
+##    si 0.3333333 0.0000000
+## 
+## , , lugar = Valencia
+## 
+##      Genero
+## si_no         H         M
+##    no 1.0000000 0.0000000
+##    si 0.0000000 0.0000000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(si_no, Genero, lugar), }\DataTypeTok{margin =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## , , lugar = Alicante
+## 
+##      Genero
+## si_no         H         M
+##    no 0.0000000 0.0000000
+##    si 0.3333333 0.0000000
+## 
+## , , lugar = Barcelona
+## 
+##      Genero
+## si_no         H         M
+##    no 0.6000000 0.0000000
+##    si 0.3333333 0.5000000
+## 
+## , , lugar = Girona
+## 
+##      Genero
+## si_no         H         M
+##    no 0.2000000 0.0000000
+##    si 0.0000000 0.5000000
+## 
+## , , lugar = Madrid
+## 
+##      Genero
+## si_no         H         M
+##    no 0.0000000 1.0000000
+##    si 0.3333333 0.0000000
+## 
+## , , lugar = Valencia
+## 
+##      Genero
+## si_no         H         M
+##    no 0.2000000 0.0000000
+##    si 0.0000000 0.0000000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(si_no, Genero, lugar), }\DataTypeTok{margin =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## , , lugar = Alicante
+## 
+##      Genero
+## si_no   H   M
+##    no        
+##    si 1.0 0.0
+## 
+## , , lugar = Barcelona
+## 
+##      Genero
+## si_no   H   M
+##    no 1.0 0.0
+##    si 0.5 0.5
+## 
+## , , lugar = Girona
+## 
+##      Genero
+## si_no   H   M
+##    no 1.0 0.0
+##    si 0.0 1.0
+## 
+## , , lugar = Madrid
+## 
+##      Genero
+## si_no   H   M
+##    no 0.0 1.0
+##    si 1.0 0.0
+## 
+## , , lugar = Valencia
+## 
+##      Genero
+## si_no   H   M
+##    no 1.0 0.0
+##    si
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(si_no, Genero, lugar), }\DataTypeTok{margin =} \KeywordTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{,}\DecValTok{3}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## , , lugar = Alicante
+## 
+##      Genero
+## si_no    H M
+##    no 0.00  
+##    si 1.00  
+## 
+## , , lugar = Barcelona
+## 
+##      Genero
+## si_no    H    M
+##    no 0.75 0.00
+##    si 0.25 1.00
+## 
+## , , lugar = Girona
+## 
+##      Genero
+## si_no    H    M
+##    no 1.00 0.00
+##    si 0.00 1.00
+## 
+## , , lugar = Madrid
+## 
+##      Genero
+## si_no    H    M
+##    no 0.00 1.00
+##    si 1.00 0.00
+## 
+## , , lugar = Valencia
+## 
+##      Genero
+## si_no    H M
+##    no 1.00  
+##    si 0.00
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ftable}\NormalTok{(Genero, si_no, lugar) }\CommentTok{# flat table o tabla plana (no divide la tabla en x tablas bidimensionales)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##              lugar Alicante Barcelona Girona Madrid Valencia
+## Genero si_no                                                
+## H      no                 0         3      1      0        1
+##        si                 1         1      0      1        0
+## M      no                 0         0      0      2        0
+##        si                 0         1      1      0        0
+\end{verbatim}
+
+\hypertarget{permutacion-de-variables}{%
+\subsection{Permutación de variables}\label{permutacion-de-variables}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{aperm}\NormalTok{(tabla, }\DataTypeTok{perm =} \KeywordTok{c}\NormalTok{(}\StringTok{"Genero"}\NormalTok{, }\StringTok{"lugar"}\NormalTok{, }\StringTok{"si_no"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## , , si_no = no
+## 
+##       lugar
+## Genero Alicante Barcelona Girona Madrid Valencia
+##      H        0         3      1      0        1
+##      M        0         0      0      2        0
+## 
+## , , si_no = si
+## 
+##       lugar
+## Genero Alicante Barcelona Girona Madrid Valencia
+##      H        1         1      0      1        0
+##      M        0         1      1      0        0
+\end{verbatim}
+
+\hypertarget{funcion-kable}{%
+\subsection{Función kable}\label{funcion-kable}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(kableExtra)}
+\KeywordTok{kable}\NormalTok{(tabla) }\CommentTok{# Muestra las frecuencias en filas}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{tabular}{l|l|l|r}
+\hline
+si\_no & Genero & lugar & Freq\\
+\hline
+no & H & Alicante & 0\\
+\hline
+si & H & Alicante & 1\\
+\hline
+no & M & Alicante & 0\\
+\hline
+si & M & Alicante & 0\\
+\hline
+no & H & Barcelona & 3\\
+\hline
+si & H & Barcelona & 1\\
+\hline
+no & M & Barcelona & 0\\
+\hline
+si & M & Barcelona & 1\\
+\hline
+no & H & Girona & 1\\
+\hline
+si & H & Girona & 0\\
+\hline
+no & M & Girona & 0\\
+\hline
+si & M & Girona & 1\\
+\hline
+no & H & Madrid & 0\\
+\hline
+si & H & Madrid & 1\\
+\hline
+no & M & Madrid & 2\\
+\hline
+si & M & Madrid & 0\\
+\hline
+no & H & Valencia & 1\\
+\hline
+si & H & Valencia & 0\\
+\hline
+no & M & Valencia & 0\\
+\hline
+si & M & Valencia & 0\\
+\hline
+\end{tabular}
+
+
+\end{document}

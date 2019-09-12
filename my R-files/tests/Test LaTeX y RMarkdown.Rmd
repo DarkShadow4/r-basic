@@ -1,0 +1,88 @@
+---
+title: "Test LaTeX y RMarkdown"
+author: "Eric"
+date: "30/8/2019"
+output: html_document
+---
+
+# Instrucciones
+En primer lugar, debéis reproducir este documento tal cual está. Necesitaréis instalar $MiKTeX$ y Texmaker.
+A continuación de cada pregunta, tenéis que redactar vuestras respuestas de manera correcta y argumentada,
+indicando qué hacéis, por qué, etc. Si se os pide utilizar instrucciones de `R`, tendréis que mostrarlas todas en
+chunks.
+El objetivo de esta tarea es que os familiaricéis con los documentos Markdown, las fórmulas en $\LaTeX$ y los
+chunks de `R`. Y, de lo más importante, que os acostumbréis a explicar lo que hacéis en cada momento.
+
+# Preguntas
+
+## Pregunta 1
+
+Realizad los siguientes productos de matrices siguiente en `R`:
+$$A\cdot B$$
+$$B\cdot A$$
+$$\left(A\cdot B\right)^t$$
+$$B^t\cdot A$$
+$$\left(A\cdot B\right)^{-1}$$
+$$A^{-1}\cdot B^t$$
+
+donde:
+$$A=\begin{pmatrix} 1&2&3&4\\4&3&2&1\\0&1&0&2\\3&0&4&0 \end{pmatrix}\ \ \ B=\begin{pmatrix} 4&3&2&1\\0&3&0&4\\1&2&3&4\\0&1&0&2 \end{pmatrix}$$
+
+Finalmente, escribe haciendo uso de $\LaTeX$ el resultado de los dos primeros productos de forma adecuada.
+
+```{r matrices, comment=NA}
+A = matrix(c(1, 2, 3, 4, 4, 3, 2, 1, 0, 1, 0, 2, 3, 0 ,4 ,0), nrow = 4, byrow = T)
+B = matrix(c(4, 3, 2, 1, 0, 3, 0, 4, 1, 2, 3, 4, 0, 1, 0, 2), nrow = 4, byrow=T)
+B
+A%*%B
+B%*%A
+t(A%*%B)
+t(B)%*%A
+(A%*%B)^-1
+(A^-1)%*%t(B)
+```
+
+## Pregunta 2
+
+Considerad en un vector los números de vuestro DNI y llamadlo dni. Por ejemplo, si vuestro DNI es
+54201567K, vuestro vector será
+
+$$dni=(5,4,2,0,1,5,6,7)$$
+
+Definid el vector en `R`. Calculad con `R` el vector dni al cuadrado, la raíz cuadrada del vector dni y, por último,
+la suma de todas las cifras del vector dni.
+Finalmente, escribid todos estos vectores también a $\LaTeX$
+```{r dni, comment=NA}
+dni=c(2,3,4,4,6,5,7,6)
+dni2=dni^2
+dni3=sqrt(dni)
+sumdni=sum(dni)
+dni2
+dni3
+sumdni
+```
+
+$$dni=(2,3,4,4,6,5,7,6) \\ dni^2=(4,9,16,16,36,25,49,36) \\ \sqrt{dni} =( 1.414214,1.732051,2.000000,2.000000,2.449490,2.236068,2.645751,2.449490) \\ sum(dni)= 37$$
+
+## Pregunta 3
+
+Considerad el vector de las letras de vuestro nombre y apellido. Llamadlo name. Por ejemplo, en mi caso sería
+
+$$nombre = (M,A,R,I,A,S,A,N,T,O,S)$$
+
+Definid dicho vector en `R`. Calculad el subvector que solo contenga vuestro nombre. Calculad también el
+subvector que contenga solo vuestro apellido. Ordenadlo alfabéticamente. Cread una matriz con este vector.
+
+```{r}
+nombre = c("E","R","I","C","A","Y","L","L","O","N")
+Nombre = nombre[1:4]
+Nombre
+Apellido = nombre[5:length(nombre)]
+Apellido
+sorted_name = sort(nombre)
+matriz=matrix(sorted_name, nrow = 2)
+matriz
+```
+
+
+Redactad todos vuestros resultados y utilizad $\LaTeX$ cuando pertoque

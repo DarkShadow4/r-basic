@@ -1,0 +1,65 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+---
+
+
+$$\left(\dfrac{\alpha}{\beta}\right)$$
+$\sum_{i=0}^{n}\ \prod_{i=0}^{n}$
+$$\sum_{i=0}^{n}\ \prod_{i=0}^{n}$$
+$\vdots$
+
+# Matrices
+
+$\begin{matrix} a_1 & a_2 & a_3 \\ b_1 & b_2 & b_3 \\ c_1 & c_2 & c_3 \end{matrix}$
+$\begin{pmatrix} a_1 & a_2 & a_3 \\ b_1 & b_2 & b_3 \\ c_1 & c_2 & c_3 \end{pmatrix}$
+$\begin{bmatrix} a_1 & a_2 & a_3 \\ b_1 & b_2 & b_3 \\ c_1 & c_2 & c_3 \end{bmatrix}$
+$\begin{vmatrix} a_1 & a_2 & a_3 \\ b_1 & b_2 & b_3 \\ c_1 & c_2 & c_3 \end{vmatrix}$
+$\begin{Bmatrix} a_1 & a_2 & a_3 \\ b_1 & b_2 & b_3 \\ c_1 & c_2 & c_3 \end{Bmatrix}$
+$\begin{Vmatrix} a_1 & a_2 & a_3 \\ b_1 & b_2 & b_3 \\ c_1 & c_2 & c_3 \end{Vmatrix}$
+
+$$\begin{matrix} a_1 & a_2 & a_3 \\ b_1 & b_2 & b_3 \\ c_1 & c_2 & c_3 \end{matrix}$$
+$$\begin{pmatrix} a_1 & a_2 & a_3 \\ b_1 & b_2 & b_3 \\ c_1 & c_2 & c_3 \end{pmatrix}$$
+$$\begin{bmatrix} a_1 & a_2 & a_3 \\ b_1 & b_2 & b_3 \\ c_1 & c_2 & c_3 \end{bmatrix}$$
+$$\begin{vmatrix} a_1 & a_2 & a_3 \\ b_1 & b_2 & b_3 \\ c_1 & c_2 & c_3 \end{vmatrix}$$
+$$\begin{Bmatrix} a_1 & a_2 & a_3 \\ b_1 & b_2 & b_3 \\ c_1 & c_2 & c_3 \end{Bmatrix}$$
+$$\begin{Vmatrix} a_1 & a_2 & a_3 \\ b_1 & b_2 & b_3 \\ c_1 & c_2 & c_3 \end{Vmatrix}$$
+
+# Sistemas de ecuaciones
+
+$$f(x)=\left\{\begin{array}{ll} x+3 & \text{si } x\le 0 \\ x-3 & \text{si } x>0 \end{array}\right.$$
+
+# Chunks en bloque
+## Python
+```{python python.reticulate=FALSE}
+print("Hello world in python from this chunk")
+```
+
+## R
+```{r}
+print("Hello world with R from this other chunk")
+```
+
+### Parametros
+```{r parametros, echo=TRUE, results="hold"}
+#echo TRUE/FALSE indica si el codigo va a aparecer
+#eval TRUE/FALSE indica si se ejecuta el codigo
+#message TRUE/FALSE indica si se muestran los mensajes que el lenguaje produce
+#warning TRUE/FALSE indica si se muestran las advertencias que el lenguaje produce
+#comment NA evita que aparezcan los ## que no son los comentarios
+#results="hide" no muestra los resultados
+#results="markup" muestra los resultados linea a linea encabezados con ## cada linea
+#results="asis" muestra los resultados como texto sin formato
+#results="hold" muestra todos los resultados al final de todo el bloque de codigo
+x=1:5
+x=1:5
+x
+print(x)
+```
+
+# Chunks en linea
+Para hacer un chunck en linea hay que usar \` \` en vez de \`\`\`\ \`\`\` y poner el lenguaje sin la llave. Por ejemplo: $\sqrt[3]{8}=$ `r 8^(1/3)` y es muy facil
+Voy a poner las primeras cifras del numero pi: $\pi$ empieza por: `r pi`
+
+Podemos usar variables de un chunk en otro, por ejemplo x sigue valiendo `r x`

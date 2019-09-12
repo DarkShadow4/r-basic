@@ -1,0 +1,12 @@
+
+# Diagramas circulares
+
+La función pie toma como argumento una tabla de frecuencias (ya sean absolutas o relativas)
+
+```{r}
+nums = sample(1:5, size = 20, replace = TRUE)
+
+pie(table(nums), main = "Diagrama circular\n de números aleatorios\n de 1 a 5")
+pie(prop.table(table(nums)), main = "Diagrama circular\n de números aleatorios\n de 1 a 5")
+```
+

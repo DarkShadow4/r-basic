@@ -1,0 +1,88 @@
+---
+title: "Data Frames"
+author: "Eric"
+date: "4/9/2019"
+output: html_document
+---
+
+# Using the default iris data set (data frame)
+
+```{r}
+DF = iris
+DF
+x = 5
+
+head(DF, x) # Shows the first x entries
+tail(DF, x) # Shows the last x entries
+names(DF) # Shows the names of the objects in the Data Frame
+str(DF) # Shows the structure of the Data Frame
+
+rownames(DF) # Returns a vector with the row identifiers
+colnames(DF) # Returns a vector with the column identifiers
+dimnames(DF) # Returns a list of two vectors with the row and column identifiers
+nrow(DF) # Returns the number of rows
+ncol(DF) # Returns the number of columns
+dim(DF) # Returns the dimension of the Data Frame
+```
+
+## Data Frames act like lists. In order to get the values of a column you need to use the folowing syntax: d.f$variable_name
+
+```{r}
+DF$Species # Returns a vector with all of the entries
+DF$Species[1:10] # Returns from the first to the tenth entry
+DF[1:10, 2:4]
+DF[DF$Species == "setosa" & DF$Sepal.Width>4,]
+```
+
+## Creating a DF
+
+```{r, crear_dataframe}
+genero = c("male", "male", "female", "male", "female", "female")
+edad = 1:6
+num_hijos = 6:1
+estudio = data.frame(gender = genero, age = edad, n_of_childs = num_hijos)
+estudio
+str(estudio)
+row.names(estudio) = c("P1", "P2", "P3", "P4", "P5", "P6") # Changes the names of the rows
+fix(estudio) # Lets you rewrite, edit or create a data frame
+dimnames(estudio) # Returns the dimension names of the given data frame (also used to modify them)
+estudio[7,] = c("male", 7, 0) # Although a vector can't have multiple type values this works, so dont enter the level of a factor but the value itselt and it will automatically transform the value to the level
+estudio = rbind(estudio, c("female", 0, 0)) # A data frame can also be extended using the rbind function
+
+n_of_siblings = c(0,0,1,4,2,1,0,5)
+estudio2 = cbind(estudio, n_of_siblings) # A data frame can even be provided with aditional data using the cbind function
+estudio2$age = as.numeric(estudio2$age) # It is possible to change the data type of the variables of the data frame
+estudio2$n_of_phones = 1:8 # This is another way to add columns/variables to a data frame
+str(estudio2)
+```
+
+
+## Saving a DF
+
+```{r saving_a_df}
+write.table(estudio, file="data_frame_prueba.txt", sep = ",", dec = ".")
+```
+
+## Aplying functions to every element in a DF
+
+```{r}
+df = iris
+sapply(subset(df, select = 1:4), mean)
+sapply(iris[,1:4], sum)
+```
+
+```{r}
+aggregate(cbind(Sepal.Length, Petal.Length) ~ Species, data = df, FUN = mean, na.rm = T)
+```
+
+```{r}
+cars = mtcars
+head(cars)
+str(cars)
+cars$cyl = as.factor(cars$cyl)
+cars$gear = as.factor(cars$gear)
+cars$carb = as.factor(cars$carb)
+str(cars)
+aggregate(mpg ~ cyl + gear + carb, data = cars, FUN = mean, na.rm = TRUE)
+```
+

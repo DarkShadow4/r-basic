@@ -1,0 +1,83 @@
+---
+title: "Plots"
+author: "Eric"
+date: "31/8/2019"
+output: html_document
+---
+
+# Gráficos
+
+## Función plot
+
+```{r, ejemplo_plot, fig.cap="Gráfico básico"}
+x = 1:10
+y = x^2-10*x+25
+plot(x, y, pch=7, cex=5, col="red")
+```
+
+Si solo aportamos un argumento, éste se interpreta como vector de datos o de variable dependiente
+
+Se puede representar funciones en gráficos
+
+```{r grafico_de_funcion, fig.cap="Raíz cuadrada", echo=F, fig.align='center'}
+f = function(x) {sqrt(x)}
+plot(f, col="green", main="Raíz cuadrada")
+
+e = function(x) {exp(x)}
+
+par(mfrow=c(1,2))
+plot(e, col="green", main=expression(e^x))
+plot(e, col="green", main=expression(e^x), log="y", ylab="Este eje está en escala logarítmica")
+par(mfrow=c(1,1))
+```
+
+```{r prueba_tipos, fig.cap="Prueba Tipos"}
+par(mfrow = c(1, 2))
+plot(y, type="p", pch=21, cex=2)
+plot(y, type="l", pch=21, cex=2)
+plot(y, type="b", pch=21, cex=2)
+plot(y, type="o", pch=21, cex=2)
+plot(y, type="h", pch=21, cex=2)
+plot(y, type="s", pch=21, cex=2)
+plot(y, type="n", pch=21, cex=2)
+par(mfrow = c(1, 1))
+
+```
+
+### Añadir elementos a un gráfico
+
+```{r Gráfico_con_más_de_un_elemento, echo=F}
+plot(y, type="b", pch=21, cex=2)
+points(5, 10)
+abline(a=2, b=4)
+fraccion = function(x) {
+  1/x
+}
+plot(fraccion, ylim=c(-5, 5), xlim=c(-5, 5))
+abline(v=0, lty=2)
+abline(h=0, lty=2)
+```
+
+
+### Se puede usar la funcion lines para añadir líneas no necesariamente rectas
+
+```{r plot2parabolasYleyendas, comment=NA}
+square = function(x) {x^2}
+plot(square, xlim = c(-5, 5), ylim = c(-10, 10), col="red")
+lines((-5:5), square(-5:5)*2, col="green")
+curve(-(x^2), col="blue", add=T)
+curve(0.5*x^3, col="black", add=T)
+legend("bottomright",
+       legend = c(expression(x), expression(x-5), expression(-x^2), expression(0.5*x^3)),
+       col = c("red", "green", "blue", "black"), 
+       bty = "l",
+       lwd = 1)
+```
+
+```{r ElementosAdicionales}
+plot(c(-10, 0, 10), c(-10, 0, 10), type="n", xlab="", ylab="")
+segments(5,0,10,-1)
+arrows(5,0,5,10, col = "green", angle = 45, code = 3)
+symbols(0, 0, stars = cbind(1, 1, 1, .5, 1, .5, 1, .5, 1, .5), add=T, lwd = 3)
+```
+

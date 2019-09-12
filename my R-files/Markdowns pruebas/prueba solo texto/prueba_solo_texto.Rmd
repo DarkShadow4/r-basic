@@ -1,0 +1,71 @@
+---
+title: "Prueba_solo_texto"
+author: "Eric"
+date: "29/8/2019"
+output:
+  html_document:
+    df_print: paged
+---
+
+# Titulo 1
+
+## Titulo 2
+
+### Titulo 3
+
+#### Titulo 4
+
+##### Titulo 5
+
+###### Titulo 6
+
+Para usar cursiva se usa el asterisco \* o la barra baja \_ por ejemplo *asi* o _asi_
+
+Para usar negrita se usa doble asterisco \*\* o doble barra baja \_\_ por ejemplo **asi** o __asi__
+
+Los superindices se colocan usando \^ por ejemplo^2^
+
+Los subindices se colocan usando la tilde \~ por~ejemplo~
+
+Para tachar se usa doble tilde \~\~ ~~ejemplo~~
+
+Para crear un link se usan los corchetes \[ \] e inmediatamente parentesis para poner el enlace \(\) por ejemplo, para ir a [Udemy](https://www.udemy.com)
+
+--Para hacer una citacion se usa el guion doble
+
+---Y el triple para hacer mas enfasis
+
+... Tres puntos son puntos suspensivos y ya XD
+
+Ecuaciones en línea se hacen con el dolar \$ por ejemplo: $tan=\frac{sen}{cos}$
+
+Para añadir imagenes se usa igual que un enlace, pero con una exclamacion antes: \!\[\]\(\) por ejemplo: ![](D:\Usuario\Documents\imagen_soma.jpg)
+
+Para hacer separaciones con una linea horizontal se usan tres asteriscos una vez \*\*\* por ejemplo:
+
+***
+
+Para hacer citas en bloque se usa el simbolo de mayor que \> por ejemplo:
+
+> Esto es una cita
+
+### Listas no ordenadas
+
+* Items en primer nivel van con asterisco \*
+* Por ejemplo
+    + Para añadir mas niveles se usa doble tabulacion y un signo de suma \+
+        + Por cada nivel son 2 tabulaciones, por ejemplo, para el nivel dos son 2 tabulaciones, pero para el nivel tres son 4 tabulaciones
+
+### Listas ordenadas
+
+1. Para hacer una lista ordenada se usan numeros, no obstante, si pones numeros repetidos o siempre el mismo, o simplemente en un orden aleatorio, la numeración continuará automaticamente, el unico numero realmente significativo es aquel con el que se inicia la lista
+
+## Tablas
+
+Un ejemplo de tabla
+
+Alumno      |    Nota    |  Edad
+------------|------------|-------
+Pedro       |     7      |   30
+Juan        |     5      | 25
+Maria       |     8      |     27

@@ -1,0 +1,13 @@
+---
+title: "secuencias"
+author: "Eric"
+date: "29/8/2019"
+output: html_document
+---
+
+## Formas de crear secuencias
+
+* **seq(a, b, by=d)** desde _a_ hasta _b_ con una distancia/progresion aritmetica de _d_ **`r seq(2, 20, by=2)`**
+* **seq(a, b, length.out=n)** desde _a_ hasta _b_ con una progresion aritmetica tal que el numero de elementos sea _n_ **`r seq(17, 98, length.out=30)`**
+* **seq(a, by=d, length.out=n)** desde _a_ con una progresion aritmetica de _d_, devuelve _n_ elementos **`r seq(4, length.out=7, by=3)`**
+* **a:b** desde _a_ hasta _b_ con una progresion aritmetica de 1 **`r 1:20`**

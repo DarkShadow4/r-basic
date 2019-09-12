@@ -1,0 +1,7 @@
+---
+title: "Factores"
+author: "Eric"
+date: "30/8/2019"
+output: html_document
+---
+

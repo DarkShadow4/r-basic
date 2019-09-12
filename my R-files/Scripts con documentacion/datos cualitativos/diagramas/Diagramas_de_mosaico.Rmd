@@ -1,0 +1,18 @@
+
+# Diagramas de mosaico
+
+La función plot, cuando toma como argumento una tabla de frecuencias (ya sean absolutas o relativas), devuelve un diagrama de mosaico
+
+```{r}
+genero = sample(c("H", "M"), size = 15, replace = TRUE)
+respuestas = sample(c("si", "no"), size = 15, replace = T)
+
+plot(table(genero, respuestas), main = "Gráfico de genero y respuestas")
+
+```
+
+Diagrama de mosaico de una tabla tridimensional
+
+```{r}
+plot(HairEyeColor, main = "Gráfico de la tabla HairEyeColor", col = c("light green", "cyan"))
+```

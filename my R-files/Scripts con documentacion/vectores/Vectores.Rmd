@@ -1,0 +1,165 @@
+---
+title: "Vectores"
+author: "Eric"
+date: "29/8/2019"
+output: html_document
+---
+
+## Tipos de vectores
+
+* Logicos
+
+* Integer(Numeros enteros)
+
+* Numericos
+
+* Complejos
+
+* Caracteres
+
+## Formas de definir vectores
+
+* c()
+
+* scan([url]) pide por teclado un vector; tambien se pueden introducir usando una url o un fichero local
+
+* fix(x) a esta no le veo un sentido muy claro de momento
+
+* rep(a, n) crea un vector de _n_ elementos iguales a _a_
+
+## Jerarquia de los tipos de datos
+
+1. character (texto)
+
+2. complex $\mathbb{C}$
+
+3. numeric $\mathbb{R}$
+
+4. integer $\mathbb{Z}$
+
+5. logical (**TRUE**/**FALSE**)
+
+> Todos los vectores son siempre de un unico tipo, no puede tener objetos de distinto tipo, si hay elementos de distinto tipo, se convertiran los que sean de menor nivel al nivel mas alto de la jerarquia anterior presente en el vector dado
+
+### Operar con/aplicar funciones a todos los elementos de un vector
+
+Para aplicar una funcion a todos los elementos del vector con algunas funciones, simplemente hay que tratar el vector como una variable:
+
+```{r vectores, comment=NA}
+vector = seq(2, by=2, length.out = 5)
+vector+2
+sqrt(vector)
+```
+
+Para los casos que no se pueda, existe una funcion llamada sapply, cuya sintaxis es la siguiente: sapply(vector, FUN=nombre_de_funcion)
+
+### Funciones basicas de estadistica
+
+* **length(vector)** calcula la longitud del vector
+
+* **max(vector)** calcula el maximo del vector
+
+* **min(vector)** calcula el minimo del vector
+
+* **sum(vector)** calcula la suma de los elementos del vector
+
+* **prod(vector)** calcula el producto de los elementos del vector
+
+* **mean(vector)** calcula la media aritmetica de las entradas del vector
+
+* **diff(vector)** genera un vector a partir de las diferencias sucesivas entre los elementos del vector
+
+* **cusum(vector)** genera un vector a partir de las sumas acumuladas de los elementos del vector
+    + permite definir sucesiones descritas mediante sumatorios
+
+### Otras funciones
+
+* **sort(vector)** ordena el vector en orden natural de los objetos que lo forman: orden numerico creciente, alfabetico, ...
+
+* **rev(vector)** invierte el orden de los elementos del vector
+
+## Subvectores, indices y filtros
+
+### Subvectores e indices
+
+-- **vector[i]** devuelve el elemento _i_ del vector; si _i_ es un vector, actuara como un vector de indices por tanto obtendriamos los elementos del vector cuyos indices correspondan con los elementos del vector _i_
+
+-- **vector[a:b]** siendo _a_ y _b_ numeros naturales, devuelve un vector conteniendo los elementos desde el _a-esimo_ hasta el _b-esimo_
+
+-- **vector[-i]** devuelve el vector original a excepcion del elemento de la posicion _i_; si _i_ es un vector, devuelve el vector complementario a _i_ (los elementos del vector original a excepcion de aquellos cuyo indice aparezca en _i_)
+
+##### Ejemplos:
+
+```{r subvectores, comment=NA}
+vector
+vector[3]
+vector[-3]
+vector[2:4]
+i = c(2, 5, 1)
+vector[i]
+vector[-i]
+```
+
+### Filtros
+
+Los filtros se emplean igual que cuando empleamos un condicional, es decir, con los operadores logicos
+
+$==\ :\ =$
+
+$!=\ :\ \ne$
+
+$>=\ :\ \ge$
+
+$<=\ :\ \le$
+
+$>\ :\ >$
+
+$<\ :\ <$
+
+$!\ :\ NO\ logico$
+
+$\&\ :\ Y\ logico$
+
+$|\ :\ O\ logico$
+
+```{r filtros, comment=NA}
+v = c(1, 3, 5, 76, 3, 42, 54, 36, 104)
+v[v!=36 & v>30]
+
+```
+
+## Funcion which
+
+Dado un vector _x_ usando la sintaxis which(x *condicion*) obtenemos los indices de aquellos elementos del vector _x_ cumplan las condiciones
+
+Sus variantes son:
+
+* **wich.min(x)** devuelve el indice del primer elemento que toma el valor minimo del vector _x_
+
+* **which(x == min(x))** devuelve el indice de todos aquellos elementos que toman el valor minimo del vector _x_
+
+* **wich.max(x)** devuelve el indice del primer elemento que toma el valor maximo del vector _x_
+
+* **which(x == max(x))** devuelve el indice de todos aquellos elementos que toman el valor maximo del vector _x_
+
+## Valores NA
+
+Cuando en nuestro vector hay valores NA, la mayoria de funciones en R permiten ignorar los elementos NA con el parametro na.rn con valor `TRUE` por ejemplo:
+
+```{r, comment=NA}
+x = 1:10
+x[15] = 1
+print(x)
+mean(x)
+mean(x, na.rm = TRUE)
+```
+
+Ademas, podemos obtener un vector de valores booleanos indicando que elementos del vector son NA con la funcion is.na( _vector_ ), y con ese vector, podemos obtener las posiciones de dichos elementos con la funcion which() e incluso ignorarlos:
+
+```{r, comment=NA}
+is.na(x)
+which(is.na(x))
+# para ignorarlos podemos hacer lo siguiente
+x[!is.na(x)] # este metodo es bastante preferible, pues no todas las funciones en R permiten ignorar los NA
+```
+

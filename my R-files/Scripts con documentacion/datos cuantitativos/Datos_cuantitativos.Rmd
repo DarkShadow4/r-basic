@@ -1,0 +1,233 @@
+---
+title: "Datos Cualitativos"
+author: "Eric"
+date: "10/9/2019"
+output: html_document
+---
+
+# Tablas de frecuencias
+
+```{r Frecuencias}
+dados = sample(1:6, size = 100, replace = T)
+
+table(dados) # Absolutas
+prop.table(table(dados)) # Relativas
+cumsum(table(dados)) # Absolutas acumuladas
+cumsum(prop.table(table(dados))) # Relativas acumuladas
+```
+
+# Medidas de centralización
+
+Media aritmética $\overline x = \frac{\sum_{i=1}^{n}x_i}{n} = \frac{\sum_{j=1}^{k}n_j X_i}{n} = \sum_{j=1}^{k}\mathit{f}_jX_j$
+
+Mediana
+
+Moda
+```{r Centralización}
+dados = sort(dados) # Se ordena en orden ascendente
+
+media = sum(dados)/length(dados)
+media_auto = mean(dados)
+
+mediana = dados[length(dados)/2] + dados[length(dados)/2 + 1] / 2 # Al ser n par, se calcula así. De ser par, simplemente se toma el valor central
+# Suponiendo dados[-100] -> dados(length) = 99
+mediana2 = as.numeric((dados[-100])[ceiling(length(dados)/2)])
+mediana_auto = median(dados)
+
+moda = as.numeric(which(table(dados) == max(table(dados))))
+```
+
+## Tipos de medias
+
+```{r}
+x = c(1, 4, 2, 3, 8, 6, 5) # Datos
+n = length(x)
+```
+
+### Aritmética
+
+$$\bar{x} = \frac{1}{n} \sum_{i=1}^n x_i$$
+
+```{r Media_aritmetica}
+sum(x)/n
+```
+
+### Aritmética ponderada
+
+$$\bar{x}_w = \frac{\sum_{i=1}^n w_i \cdot x_i}{\sum_{i=1}^n w_i}$$
+
+```{r}
+w = c(3, 1, 4, 2, 1, 5, 3) # Pesos
+w1 = c(1, 1, 1, 1, 1, 1, 1)
+sum(x*w)/sum(w) # Media aritmética ponderada
+
+sum(x*w1)/sum(w1) # La media aritmética ponderada se convierte en media aritmética si los pesos son todos iguales a entre si
+```
+
+### Media geométrica
+
+$$\bar{x}_g = \left( \prod_{i=1}^n x_i\right)^{1/n}$$
+
+```{r}
+prod(x)^(1/n) #Media geométrica
+prod(x^(1/n))
+```
+
+### Media armónica
+
+$$\bar{x}_a = \frac{n}{\sum_{i=1}^n \frac{1}{x_i}}$$
+
+```{r}
+n/sum(1/x)
+```
+
+# Medidas de posición
+
+## Cuantiles
+
+Hay cuantiles con nombres propios:
+
+$Primer\ cuartil \mathit{Q}_{0.25}$
+$Segundo\ cuartil \mathit{Q}_{0.5}$
+$Tercer\ cuartil \mathit{Q}_{0.75}$
+
+El segundo cuartil o cuantil $\mathit{Q_{0.5}}$ es también la mediana
+
+Los deciles son los cuantiles $\mathit{Q}_p$ con p múltiplo de 0.1
+Los percentiles son los cuantiles $\mathit{Q}_p$ con p múltiplo de 0.01
+
+```{r}
+set.seed(260798)
+dado = sample(1:4, size = 50, replace = T)
+set.seed(NULL)
+
+n = length(dado)
+dado = sort(dado)
+dado
+
+df.dado = data.frame(Cara = 1:4,
+                     Fr.abs = as.vector(table(dado)),
+                     Fr.rel = as.vector(prop.table(table(dado))),
+                     Fr.acu = as.vector(cumsum(table(dado))),
+                     Fr.racu = as.vector(cumsum(prop.table(table(dado)))))
+df.dado
+
+cuantil0.3 = df.dado$Cara[which(df.dado$Fr.racu >= 0.3)][1]
+cuantil0.5 = df.dado$Cara[which(df.dado$Fr.racu >= 0.5)][1]
+cuantil0.6 = df.dado$Cara[which(df.dado$Fr.racu >= 0.6)][1]
+cuantil0.9 = df.dado$Cara[which(df.dado$Fr.racu >= 0.9)][1]
+
+cuantil0.7 = dado[length(dado)*0.70]
+
+quantile(x = dado, p = 0.7) # El argumento type por defecto es 7, pero hay 9 tipos de cuantiles disponibles con esta funcion
+```
+
+# Medidas de dispersión
+
+## Rango o recorrido
+
+Distancia entre el valor máximo y el mínimo de las observaciones
+
+```{r}
+rango = max(df.dado$Cara) - min(df.dado$Cara)
+range(dado) # Devuelve los valores mínimo y máximo
+diff(range(dado)) # Devuelve la diferencia entre el valor máximo y el mínimo (el rango o recorrido)
+```
+
+## Rango intercuartílico
+
+Diferencia entre el tercer y primer cuartil
+
+```{r}
+Rango_intercuartilico = quantile(x = dado, p = 0.75) - quantile(x = dado, p = 0.25)
+IQR(x = dado) # Devuelve el rango intercuartílico. El argumento type por defecto es 7
+```
+
+## Varianza (poblacional)
+
+$$s^2 = \frac{\sum_{j=1}^n (x_j - \bar{x})^2}{n}$$
+
+```{r}
+s2 = sum((dado-mean(dado))^2)/n
+var(x)*(length(dado)-1)/length(dado) # Devuelve la varianza poblacional
+```
+
+## Desviación típica (poblacional)
+
+Raíz cuadrada positiva de la varianza $\sqrt{s^2}$
+
+```{r}
+s = sqrt(s2)
+sd(dado)*sqrt((length(dado)-1)/length(dado))
+```
+
+
+## Varianza muestral
+
+Corrección de la varianza
+
+$$\tilde{s}^2 = \frac{n}{n-1}s^2 = \frac{\sum_{j=1}^n (x_j - \bar{x})^2}{n-1}$$
+
+```{r}
+sm2 = n/(n-1) * s2
+sm2 = sum((dado-mean(dado))^2)/(n-1)
+var(dado) # Devuelve la varianza muestral
+```
+
+## Desviación típica muestral
+
+Raíz cuadrada positiva de la varianza muestral $\sqrt{\tilde{s}^2}$
+
+```{r}
+sm = sqrt(sm2)
+sd(dado) # Devuelve la desviación típica muestral
+```
+
+## Propiedades de la varianza
+
+La varianza $s^2 \ge 0$ pues es una suma de cuadrados.
+
+Para que $s^2 = 0 \Longrightarrow x_j - \bar{x} = 0\ \forall j=1,...,n$ por tanto, si $s^2 = 0$, todos los valores son iguales.
+
+La varianza también se puede expresar como $s^2 = \frac{\sum_{i=1}^{n} x_i^2}{n} - \bar{x}^2$
+
+$$s^2 = \frac{\sum_{i=1}^n (x_i-\bar{x})^2}{n} \\ n \cdot s^2 = \sum_{i=1}^n(x_i-\bar{x})^2 = \sum_{i=1}^n (x_i^2 - 2x_i \cdot \bar{x} + \bar{x}^2) \\ n \cdot s^2 = \sum_{i=1}^n x_i^2 - 2 \sum_{i=1}^n x_i \cdot \bar{x} + \sum_{i=1}^n \bar{x}^2 \\ n \cdot s^2 = \sum_{i=1}^n x_i^2 -2\bar{x}(\sum_{i=1}^n x_i) + n \bar{x}^2 \\ n \cdot s^2 = \sum_{i=1}^n x_i^2 - 2\bar{x} \cdot n \bar{x} + n \bar{x}^2 = \sum_{i=1}^n x_i^2 - 2n \bar{x}^2 + n \bar{x}^2 \\ n \cdot s^2 = \sum_{i=1}^n x_i^2 - n \bar{x}^2 \Rightarrow s^2 = \frac{\sum_{i=1}^n x_i}{n} - \bar{x}^2$$
+
+# Función Summary y agregación de datos cuantitativos por factor
+
+```{r}
+DF = iris
+```
+
+
+## Función by
+
+```{r}
+by(DF[,c(1,3)], DF$Species, FUN = summary, na.rm=T)
+```
+
+## Función aggregate
+
+```{r}
+aggregate(cbind(Sepal.Length,Petal.Length)~Species,
+          data=DF, FUN = summary, na.rm = T)
+```
+
+# Diagramas de caja
+
+```{r}
+boxplot(dados, main = "Diagrama de caja de los dados")
+boxplot(c(dados, 10), main = "Diagrama de caja de los dados") # el punto que sale se llama outlier. Se representa de esa forma porque es superior a (1.5IQR + Q0.75)
+# Boxplot acepta los parámetros de la función plot
+
+boxplot(iris, col = c("cyan")) # Boxplot puede representar todo un dataframe, pero se recomienda tratar los datos antes para que el plot sea más legible o incluso útil
+boxplot(Sepal.Length~Species, data = iris, col = c("cyan")) # Boxplot de datos numéricos en función de un factor
+boxplot(Sepal.Length~Species, data = iris, col = c("cyan"), notch = T) # Notch indica si se hará una muesca en la caja a la altuda de la mediana
+medias = aggregate(Sepal.Length~Species, data = iris, FUN = mean)
+points(medias, col = "red", pch = 20)
+
+str(boxplot(Sepal.Length~Species, data = iris)) # Nos devuelve los datos usados para realizar la representación
+boxplot(Sepal.Length~Species, data = iris)$out
+boxplot(Sepal.Length~Species, data = iris)$stats # Nos devuelve los datos usados para realizar la representación
+```
+

@@ -1,0 +1,19 @@
+
+# Diagramas de barras
+
+La función barplot toma como argumento una tabla de frecuencias (ya sean absolutas o relativas)
+
+```{r}
+genero = sample(c("H", "M"), size = 20, replace = TRUE)
+barplot(table(genero), col=c("blue", "green"), main = "Diagrama de barras\n de hombres y mujeres\n aleatoriamente")
+barplot(prop.table(table(genero)), col=c("blue", "green"), main = "Diagrama de barras\n de hombres y mujeres\n aleatoriamente")
+
+par(mfrow=c(1, 2))
+barplot(table(genero), col=c("green"), main = "Diagrama de barras\n de hombres y mujeres\n aleatoriamente")
+barplot(prop.table(table(genero)), col=c("blue", "green"), main = "Diagrama de barras\n de hombres y mujeres\n aleatoriamente", horiz = TRUE)
+
+respuestas = sample(c("si", "no"), size = 20, replace = T)
+barplot(table(genero, respuestas), legend.text = TRUE, col = c("blue", "yellow"))
+barplot(table(genero, respuestas), legend.text = c("Hombres", "Mujeres"), col = c("blue", "yellow"), beside = TRUE)
+```
+
