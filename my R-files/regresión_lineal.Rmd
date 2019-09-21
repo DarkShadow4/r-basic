@@ -1,0 +1,131 @@
+---
+title: "Regresión lineal"
+author: "Eric"
+date: "12/9/2019"
+output: html_document
+---
+
+Se usa para hacer predicciones. En la regresión lineal se busca la función que relaciona las variables dependiente e independiente.
+La opción más facil es la relación lineal:
+
+$$y = ax+b$$
+con $a, b \in \mathbb{R}$
+
+Buscando que la suma de los cuadrados de las diferencias entre los valores y las aproximaciones sea mínima
+
+$$\sum_{i=1}^n ( y_i - \tilde{y}_i)^2$$
+
+## Como calcular la recta de una regresión lineal
+
+```{r}
+body_fat_df = read.table("../data/bodyfat.txt", header = T)
+head(body_fat_df, 3)
+fat_weight = body_fat_df[c(2, 4)]
+str(fat_weight)
+head(fat_weight)
+tail(fat_weight)
+plot(fat_weight)
+```
+
+### Calcular la recta de regresión
+
+```{r}
+y = fat_weight$Weight
+x = fat_weight$Fat
+
+lm(y~x) # ~ significa "en función de"
+
+lm(Weight~Fat, data = fat_weight)
+```
+
+### Interpretar el resultado
+
+Call:
+lm(formula = Weight ~ Fat, data = fat_weight)
+
+Coefficients:
+(Intercept)          Fat  
+   resto(?)  coeficiente 
+
+La función lineal que mejor se ajusta al modelo establecido es la siguiente: $\tilde{y} = coeficiente \cdot x + resto(?)$ ó $\tilde{y} = Fat \cdot x + (Intercept)$
+
+`R` llama _coeficientes_ a las incógnitas _a_ y _b_ pero las da al revés: _a_ = Fat, b = (Intercept) (en este caso a = fat porque la variable independiente es fat)
+
+#### Representación
+
+```{r}
+actual_model = lm(Weight~Fat, data = fat_weight)
+summary(actual_model)
+plot(fat_weight)
+abline(actual_model, col = "red")
+```
+
+## Coeficiente de determinación $\mathit{R}^2$
+
+Es útil para determinar si realmente existe una relación lineal significativa entre los datos y el modelo calculado
+$R^2 \in [0, 1]$ cuanto más cercano a 1, el ajuste será considerado mejor. Generalmente se considera que si $R^2 > 0.9$ el ajuste es lo suficientemente bueno.
+
+La función lm() devuelve entre otros datos, el coeficiente de determinación, $R^2$. Éste se llama **Multiple R-squared** Y se obtiene de la siguiente manera:
+
+```{r}
+summary(actual_model)$r.squared
+```
+
+# Transformaciones logarítmicas
+
+Si en vez de $y = ax+b$ nuestro modelo es $log(y) = ax+b$, los valores log(y) siguen una ley aproximadamente lineal en los valores de x, es decir, los valores de y siguen una relación aproximadamente exponencial en x.
+Pues se cumple que:
+
+$$y = 10^{log(y)} = 10^{ax+b} = 10^{ax} \cdot 10^b = \alpha^x \beta$$
+
+con $\alpha = 10^a$ y $\beta = 10^b$
+
+Si al representar los puntos en una escala doble logarítmica, los mismos forman casi una línea recta, los valores log(y) siguen una ley aproximadamente lineal en los valores de log(x). Y los valores y siguen una relación aproximadamente potencial en x.
+
+Teniendo $log(y) = a\cdot log(x) + b$ se cumple que:
+
+$$y = 10^{log(y)} = 10^{a \cdot log(x)+b} = (10^{log(x)})^a \cdot 10^b = x^a\beta$$
+
+con $\beta = 10^b$
+
+## Relación exponencial
+
+```{r}
+dep = c(1.2, 3.6, 12, 36)
+ind = c(20, 35, 61, 82)
+
+plot(ind, dep, main = "Escala lineal")
+plot(ind, dep, main = "Escala semilogarítmica", log = "y")
+
+logmodel = lm(log10(dep)~ind)
+summary(logmodel)$r.squared
+
+
+funcionlog = function(x) { y = 10^(0.02318*x) * 10^(-0.33)  } # = function(x) { y = 1.054^x * 0.468  }
+plot(ind, dep, main = "Escala lineal")
+curve(funcionlog, add = T, col="cyan")
+```
+
+## Relación potencial
+
+```{r}
+tiempo = 1:10
+gramos = c(0.097,0.709,2.698,6.928,15.242,29.944,52.902,83.903,120.612,161.711)
+d.f = data.frame(tiempo,gramos)
+
+plot(d.f)
+plot(d.f, log="y")
+plot(d.f, log="xy")
+
+potmodel = lm(log10(gramos)~log10(tiempo), data = d.f)
+summary(potmodel)$r.squared
+
+funcionpot = function(x) {  y = 10^(3.298*log10(x))*10^(-1.093)  } # = function (x) {x^3.298 * 0.081}
+plot(d.f)
+curve(funcionpot, add = T, col = "red")
+plot(d.f, log="y")
+curve(funcionpot, add = T, col = "cyan")
+plot(d.f, log="xy")
+curve(funcionpot, add = T, col = "green")
+```
+

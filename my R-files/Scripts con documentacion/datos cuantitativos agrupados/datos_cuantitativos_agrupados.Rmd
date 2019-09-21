@@ -1,0 +1,251 @@
+---
+title: "Datos cuantitativos agrupados"
+author: "Eric"
+date: "12/9/2019"
+output: html_document
+---
+
+# Para decidir cómo agrupar los datos hay que tener en cuenta:
+
+1. Número de intervalos a usar
+2. Amplitud de los intervalos
+3. Acumular los extremos de los intervalos o no
+4. Calcular el valor representativo de cada intervalo (marca de clase)
+
+## Cómo saber de que forma separar los datos en intervalos
+
+### Obtener el número de intervalos
+
+#### Reglas o métodos para establecer el número de intervalos o clases de forma directa
+
+Regla de la raíz cuadrada: $k = \lceil \sqrt{n} \rceil$
+
+Regla de Sturges: $k = \lceil 1 + log_2(n) \rceil$
+
+#### Reglas o métodos para establecer el número de intervalos o clases en base a una amplitud teórica
+
+Regla de Scott: $A_s = 3.5 \cdot \tilde{s} \cdot n^{- \frac{1}{3} }$
+
+A continuación, se obtiene el número de intervalos de la siguiente manera: $k = \lceil \frac{max(x) - min(x)}{A_s} \rceil$
+
+Regla de Freedman-Diaconis: $A_{FD} = 2 \cdot (Q_{0.75} - Q_{0.25}) \cdot n^{- \frac{1}{3}}$
+
+Al igual que con la regla de Scott: $k = \lceil \frac{max(x) - min(x)}{A_{FD}} \rceil$
+
+### Obtener la amplitud de los intervalos
+
+Una vez hemos obtenido el número de intervalos(**k**), hemos de hallar la amplitud más adecuada para los intervalos **A**.
+
+Para calcular **A** se divide el rango total de los datos entre el número de intervalos redondeando el resultado por exceso al valor de precisión que se haya establecido $A = \lceil \frac{max(x) - min(x)}{A} \rceil$
+
+Si el resultado da exacto, un número entero. Éste es incrementado en el valor de precisión establecido (si da 1, será 1.1 si el valor de precisión es las décimas)
+
+### Establecer los extremos de los intervalos
+
+El extremo izquierdo suele ser cerrado, mientras que el izquierdo suele ser abierto. Se denota de la siguente forma:
+$$[L_1, L_2), [L_2, L_3), ..., [L_k, L_{k+1})$$
+
+Siendo los L_i los extremos de los intervalos. El primero se calcula de la siguiente forma:
+$$L_1 = min(x) - \frac{1}{2} \cdot precisión$$
+
+Los siguientes intervalos se calculan de la siguiente manera:
+$$L_2 = L_1 + A \\ L_3 = L_2 + A \\ \vdots \\ L_{k+1} = L_k + A$$
+
+Ésto es equivalente al siguiente cálculo:
+$$L_i = L_1 + (i-1)A, i = 2, ..., k+1$$
+
+### Determinar la marca de clase
+
+Éste es el valor que representa el intervalo, suele ser el punto central del mismo, pero en ocasiones se elije usar el valor de uno de los extremos
+$$X_i = \frac{L_i+L_{i+1}}{2}$$
+Al tener intervalos de amplitud A, la distancia entre un punto $X_i$ y el siguiente $X_{i+1}$ es A, por tanto se cumple que
+$$X_i = X_1 + (i - 1)A, i = 2, ..., k \\ X_1 = \frac{L_1 + L_2}{2}$$
+## Aplicando las reglas
+
+```{r carga_de_df}
+crabs = read.table("../../../data/datacrab.txt", header = TRUE)
+str(crabs)
+cw = crabs$width
+n = length(cw)
+```
+
+### Calcular el número de clases
+
+```{r "Regla de la raíz cuadrada"}
+k1 = ceiling(sqrt(n))
+```
+
+```{r "Regla de Sturges"}
+k2 = ceiling(1+log(n, 2))
+nclass.Sturges(cw)
+```
+
+```{r "Regla de Scott"}
+As = 3.5 * sd(cw) * n^(-1/3)
+k3 = ceiling((max(cw)-min(cw))/As) # Equivalente a ceiling(diff(range(cw))/As)
+nclass.scott(cw)
+```
+
+```{r "Regla de Freedman-Diaconis"}
+Afd = 2*IQR(cw)*n^(-1/3) # Equivalente a 2*(quantile(cw, 0.75, names = FALSE) - quantile(cw, 0.25, names = FALSE))*n^(-1/3)
+k4 = ceiling(diff(range(cw))/Afd) # Equivalente a ceiling(diff(range(cw))/As)
+nclass.FD(cw)
+```
+
+### Calcular la amplitud de las clases o intervalos
+
+```{r "Amplitud de los intervalos"}
+# Usaremos la precisión .2f (dos cifras decimales) redondeando por exceso
+A1 = round(diff(range(cw))/k1, 1) + 0.1
+A2 = round(diff(range(cw))/k2, 1) + 0.1
+A3 = round(diff(range(cw))/k3, 1) + 0.1
+A4 = round(diff(range(cw))/k4, 1) + 0.1
+```
+
+### Establecer los extremos de los intervalos
+
+```{r "Solución recursiva"}
+L1 = min(cw)-1/2*0.1
+L2 = L1 + A3
+L3 = L2 + A3
+L4 = L3 + A3
+L5 = L4 + A3
+L6 = L5 + A3
+L7 = L6 + A3
+L8 = L7 + A3
+L9 = L8 + A3
+L10 = L9 + A3
+L11 = L10 + A3
+L = c(L1, L2, L3, L4, L5, L6, L7, L8, L9, L10, L11)
+L
+rm(L1, L2, L3, L4, L5, L6, L7, L8, L9, L10, L11) # Elimino las variables intermedias para vaciar un poco la memoria ya que no me sirven más
+```
+
+```{r "Solución no recursiva"}
+L1 = min(cw)-1/2*0.1
+L = c(L1, L1 + A3*(1:10))
+L
+```
+
+### Calcular las marcas de clase
+
+```{r "Marcas de clase"}
+X = (L[1:length(L)-1]+L[2:length(L)])/2
+```
+
+
+## Segmentar vectores de datos cuantitativos en intervalos con R
+
+### Función cut()
+
+```{r cut}
+cut(x = cw, # x es el vector de datos
+    breaks = L, # breaks puede ser un vector numérico con los extremos de los intervalos o un número k que representa el número de clases
+    labels = X, # labels es  un vector que contiene las etiquetas  a asignar a los intervalos, si es FALSE, asignará números respectivamente a su orden natural
+    right = FALSE, # right es un booleano que indica si los intervalos son cerrados por la izquierda y abiertos por la derecha (si es False, si es TRUE es al revés)
+    include.lowest = TRUE) # Hace que el último intervalo sea cerrado
+# Cut devuelve un factor o un vector
+```
+
+#### Ejemplo de cut
+
+```{r}
+petals = iris$Petal.Length
+cut(petals, breaks = 4, right = FALSE)
+cut(petals, breaks = 4, right = FALSE, labels = F)
+cut(petals, breaks = 4, right = FALSE, labels = c("S", "M", "L", "XL"))
+cut(petals, breaks = ceiling(sqrt(length(petals))), right = FALSE)
+```
+
+### Cálculo de frcuencias
+
+```{r "frecuencias"}
+flores = iris
+flores$intervalos = cut(petals, breaks = ceiling(sqrt(length(petals))), right = FALSE, labels = FALSE)
+table(flores$intervalos)
+prop.table(table(flores$intervalos))
+cumsum(table(flores$intervalos))
+cumsum(prop.table(table(flores$intervalos)))
+```
+
+### Función hist()
+
+Sirve para crear histogramas. Devuelve una lista cuya componente componente count (hist()$count) representa la tabla de frecuencias absolutas. Su somponente mids es el vector de marcas de clase
+
+```{r}
+As = 3.5*sd(petals)*length(petals)^(-1/3)
+Ks = ceiling((max(petals)-min(petals))/As)
+A = round(diff(range(petals))/Ks, 1) + 0.1
+L1 = min(petals)-1/2*0.1
+L = c(L1, L1 + A*(1:Ks))
+hist(x = petals, breaks = L, right = F, plot = F)
+```
+
+# Estadísticos
+
+Los estadísticos se deben calcular antes de realizar la agrupación por intervalos puesto que al agrupar se modifica un poco la información.
+En caso de que los datos lleguen a nosotros ya agrupados, se pueden calcular aproximaciones de los estadísticos.
+
+Los estadísticos se calculan de la misma forma, a diferencia de que sustituimos la frecuencia absoluta por el producto de la frecuencia absoluta de cada clase por la marca de clase de la misma $x_i \rightarrow n_jX_j$
+
+$$\bar{x} = \frac{\sum_{j=1}^kn_jX_j}{n} \\ s^2 = \frac{\sum_{j=1}^kn_jX_j^2}{n}-\bar{x}^2 \\ \tilde{s}^2 = \frac{n}{n-1}\cdot s^2 \\ s = \sqrt{s^2} \\ \tilde{s} = \sqrt{\tilde{s}^2}$$
+
+La moda es imposible calcularla, por tanto se calcula un estadístico que la sustituye, éste se llama _intervalo modal_ y es el intervalo que tiene mayor frecuencia.
+La mediana también ha de ser sustituida por otro estadístico, éste se llama _intervalo crítico para la mediana_ y es el primer intervalo cuya frecuencia relativa acumulada sea mayor o igual que 0.5
+
+Siendo $n_c$ su frecuencia absoluta, $A_c$ su amplitud y $N_{c-1}$ la frecuencia acumulada del intervalo inmediatamente anterior; si el intervalo crítico para la mediana es el primer intervalo, $N_{c-1} = 0$.
+
+M será la aproximación para la mediana de los datos "reales" calculada de la siguiente manera:
+
+$$M = L_c + A_c \cdot \frac{\frac{n}{2}-N_{c-1}}{n_c}$$
+
+Ésta fórmula permite calcular también los cuantiles $Q_p$
+
+$$Q_p = L_p + A_p \cdot \frac{ p \cdot n -N_{p-1}}{n_p}$$
+# Representación gráfica usando histogramas
+
+En un histograma, el área de las barras representa la frecuencia. En el caso de que todas las barras sean igual de anchas, en el eje vertical se puede asignar las frecuencias, sin embargo, si la anchura de las barras no es igual en todas, el eje vertical se debe representar de manera que el producto de la base y la altura de las barras (el área) represente la frecuencia
+
+La función para representar un histograma es la función hist.
+
+El argumento **breaks** puede ser un string representando el método de creación de clases que se quiera usar, ex.: "Scott", "Sturges", ... No obstante, hist() realizará una distribución de intervalos un poco diferente a la esperada o la que haría la función cut(), por tanto se recomienda proporcionar un vector de divisiones ya calculados manualmente o de alguna manera controlada
+
+**freq** indica si se quiere representar el histograma de frecuencias absolutas si es posible (es decir, si todos los intervalos tienen la misma amplitud) si es FALSE, siempre representará las frecuencias relativas.
+
+Otros argumentos que se pueden especificar son **right**, **include.lowest** los cuales funcionan igual que en la función cut() y demás argumentos de la función plot que puedan tener sentido en la función hist
+
+La densidad de un intervalo es la división de su frecuencia relativa entre su amplitud
+
+### Histograma de frecuencias absolutas
+
+```{r hist}
+histAbs = function(x,L) {
+  h = hist(x, breaks = L, right = FALSE, freq = FALSE,
+           xaxt = "n", yaxt = "n", col = "lightgray", # xaxt = "n" indica que no se muestre el eje x lo mismo para y con yaxt
+           main = "Histograma de frecuencias absolutas", 
+           xlab = "Intervalos y marcas de clase",ylab = "Frecuencias absolutas")
+  axis(side = 1, at=L) # side = 1 abscisas 2 ordenadas, at = lugares donde dibujar divisiones del eje
+  text(h$mids, h$density/2, labels=h$counts, col="purple") 
+}
+histAbsCum = function(x,L) {
+  h = hist(x, breaks = L, right = FALSE , plot = FALSE) 
+  h$density = cumsum(h$density)
+  plot(h, freq = FALSE, xaxt = "n", yaxt = "n", col = "lightgray", 
+       main = "Histograma de frecuencias\nabsolutas acumuladas", xlab = "Intervalos", 
+       ylab = "Frec. absolutas acumuladas")
+  axis(side = 1, at=L)
+  text(h$mids, h$density/2, labels = cumsum(h$counts), col = "purple") 
+}
+
+histAbs(cw, L)
+rug(cw)
+
+histAbsCum(cw, L)
+rug(jitter(cw))
+```
+
+La función rug crea una "alfombra" con marcas en los valores del vector. El grosor de las marcas es proporcional a la frecuencia del valor que representa
+La función jitter añade ruido a la función rug para deshacer posibles empates
+
+### Histograma de frecuencias relativas
+
