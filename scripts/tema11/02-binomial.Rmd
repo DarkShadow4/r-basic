@@ -2,7 +2,10 @@
 title: "Binomial"
 author: "Curso de Estadística Descriptiva"
 date: "4/2/2019"
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -12,7 +15,15 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Función de densidad
 Sea $X = B(n = 30, p = 0.6)$,
 
-TODO: escribir la FDens y la FDistr
+$$f(k) = {n \choose k} p^k (1-p)^{n-k}$$
+
+$$F(x) = \left\{
+\begin{array}{cl}
+0 & \text{si } x < 0 \\
+\sum_{k=0}^x f(k) & \text{si } 0 \le x < n \\
+1 & \text{si } x \ge n
+\end{array}
+\right.$$
 
 ## En `R`
 
